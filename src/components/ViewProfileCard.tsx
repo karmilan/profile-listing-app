@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import { Profile } from "../types/profile";
 
 const ViewProfileCard: React.FC<Profile> = ({
-  client_id,
   client_name,
   client_profile_url,
   client_city,
