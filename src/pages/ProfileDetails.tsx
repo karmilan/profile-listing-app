@@ -7,7 +7,6 @@ const ProfileDetails = () => {
 
   return (
     <div>
-      {/* {client_id} {client_name} */}
       <ViewProfileCard {...location.state} />
     </div>
   );

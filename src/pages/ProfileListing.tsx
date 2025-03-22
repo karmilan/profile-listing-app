@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { CgClose } from "react-icons/cg";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { LuUsersRound } from "react-icons/lu";
 import ProfileCard from "../components/ProfileCard";
 import { Profile } from "../types/profile";
@@ -9,15 +9,20 @@ const ProfileListing = () => {
   const [profileData, setProfileData] = useState<Profile[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>();
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchInput, setSearchInput] = useState<string>("");
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    setSearchInput(event.target.value);
   };
+
+  const clearSearchBar = () => {
+    setSearchInput("");
+  };
+
   const filteredProfiles = profileData?.filter(
     (profile) =>
       profile.client_name &&
-      profile.client_name.toLowerCase().includes(searchTerm.toLowerCase())
+      profile.client_name.toLowerCase().includes(searchInput.toLowerCase())
   );
 
   useEffect(() => {
@@ -52,22 +57,25 @@ const ProfileListing = () => {
         </div>
       </div>
       {/* ------------search input------------ */}
-      <div className="mb-8 flex justify-center relative">
+      <div className="mb-8 flex justify-center items-center relative">
         <input
           type="text"
           placeholder="Search profiles..."
-          value={searchTerm}
+          value={searchInput}
           onChange={handleSearch}
-          className="w-1/2 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+          className="w-full md:w-1/2 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
         />
-        <div className="absolute right-1/4">
-          <CgClose className="text-4xl" />
+        <div
+          className="absolute right-1 md:right-[26%] cursor-pointer"
+          onClick={clearSearchBar}
+        >
+          <IoIosCloseCircleOutline className="text-3xl text-gray-400" />
         </div>
       </div>
 
       {/* --------profile cards grid------------ */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {searchTerm
+        {searchInput
           ? filteredProfiles &&
             filteredProfiles.map((data) => (
               <div key={data.client_id}>
