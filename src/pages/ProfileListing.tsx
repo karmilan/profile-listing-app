@@ -9,13 +9,15 @@ const ProfileListing = () => {
   const [profileData, setProfileData] = useState<Profile[]>([]);
   const [loading, setLoading] = useState();
   const [error, setError] = useState();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
-  const filteredProfiles = profileData?.filter((profile) =>
-    profile.client_name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProfiles = profileData?.filter(
+    (profile) =>
+      profile.client_name &&
+      profile.client_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   useEffect(() => {
@@ -32,6 +34,9 @@ const ProfileListing = () => {
     };
     fetchProfileData();
   }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <>
