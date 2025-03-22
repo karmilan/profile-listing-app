@@ -7,8 +7,8 @@ import { Profile } from "../types/profile";
 
 const ProfileListing = () => {
   const [profileData, setProfileData] = useState<Profile[]>([]);
-  const [loading, setLoading] = useState();
-  const [error, setError] = useState();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +30,9 @@ const ProfileListing = () => {
         setProfileData(res.data);
       } catch (error) {
         console.log(error);
+        setError("Failed to fetch profiles");
+      } finally {
+        setLoading(false);
       }
     };
     fetchProfileData();
