@@ -28,9 +28,7 @@ const ProfileListing = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const res = await axios.get(
-          "https://backend.graycorp.io:9000/mymate/api/v1/tempClients"
-        );
+        const res = await axios.get(import.meta.env.VITE_API_URL);
         console.log("res", res);
         setProfileData(res.data);
       } catch (error) {
